@@ -1,0 +1,63 @@
+<br>
+<form autocomplete="off" id="frm" #frm="ngForm" (ngSubmit)="listartarefaporba(frm)">
+  <div class="card bg-light mb-3">
+    <div class="card-header"><h4 align="center">Pesquisar Acionamento</h4></div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="pesquisaba" class="control-label"><b>BA:</b></label>
+          <input id="pesquisaba" name="pesquisaba" type="text" [(ngModel)]="pesquisaba" class="form-control" #pesquisabactrl="ngModel">
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-muted  text-right">
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" class="btn btn-primary">
+            Pesquisar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<span *ngIf="ctrlmessage">
+    <div class="alert alert-danger">
+        <strong>Atenção!</strong>O BA informado não existe.
+    </div>
+</span>
+<span *ngIf="ctrltable">
+ <div class="row">
+  <div class="col-sm-12">
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Data</th>
+          <th scope="col">Status</th>
+          <th scope="col">tecnico</th>
+          <th scope="col">Chegada</th>
+          <th scope="col">Saída</th>
+          <th scope="col">Detalhe</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let manutencao of manutencoes">
+        <tr>
+          <td class="formatartexto">{{manutencao.id}}</td>
+          <td class="formatartexto">{{manutencao.datahorastatus | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+          <td class="formatartexto">{{manutencao.status}}</td>
+          <td class="formatartexto">{{manutencao.tecnico}}</td>
+          <td class="formatartexto">{{manutencao.datachegadanosite | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+          <td class="formatartexto">{{manutencao.datasaidadosite | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+          <td class="formatartexto">{{manutencao.detalhes}}</td>
+        </tr>
+      </tbody>  
+    </table>
+  </div>
+ </div>
+ <div class="row">
+   <div class="col-sm-12">
+     <p>Histórico BA: <b>{{pesquisaba}}</b></p>
+   </div>
+ </div>
+</span>

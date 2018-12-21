@@ -1,0 +1,147 @@
+<br>
+<form autocomplete="off" #frm="ngForm" (ngSubmit)="alterarmanutencao(frm)">
+    <div class="card bg-light mb-3">
+      <div class="card-header"><h4 align="center">Atualizar Acionamento</h4></div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="bapesquisa" class="control-label"><b>BA:</b></label>
+              <input id="bapesquisa" name="bapesquisa" type="text" 
+              (change) = "pesquisarmanutencaoporba()" [(ngModel)]="bapesquisa" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-2">
+              <div class="form-group">
+                <label for="ufsite" class="control-label"><b>Chave:</b></label>
+                <input disabled id="chave" name="chave" type="text" [(ngModel)]="manutencao.chave" class="form-control">
+              </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="ufsite" class="control-label"><b>UF:</b></label>
+              <input disabled id="ufsite" name="ufsite" type="text" [(ngModel)]="manutencao.ufsite" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-4">
+              <div class="form-group">
+                <label for="site" class="control-label"><b>Site:</b></label>
+                <input disabled id="site" name="site" type="text" [(ngModel)]="manutencao.site" class="form-control">
+              </div>
+          </div> 
+        </div> 
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="uftecnico" class="control-label"><b>UF Técnico:</b></label>
+              <select name="uftecnico" [disabled]="bloqueio" id="uftecnico" (click)="pesquisartecnico(manutencao.uftecnico)" [(ngModel)]="manutencao.uftecnico" class="form-control">
+                <option>{{manutencao.uftecnico}}</option>
+                <option>AC</option>
+                <option>DF</option>
+                <option>GO</option>
+                <option>MS</option>
+                <option>MT</option>
+                <option>RO</option>
+                <option>TO</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="form-group">
+              <label for="tecnico" class="control-label"><b>Técnico:</b></label>
+              <select id="tecnico" (change)="pesquisaridporufnomeusual(manutencao.uftecnico, manutencao.tecnico)"
+              [disabled]="bloqueio" name="tecnico" [(ngModel)]="manutencao.tecnico" class="form-control">
+                  <option>{{manutencao.tecnico}}</option>
+                <option *ngFor="let tecnico of tecnicos" [value]="tecnico.nomeusual">
+                  {{tecnico.nomeusual}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+              <div class="form-group">
+                <label for="tecnico" class="control-label"><b>Status:</b></label>
+                <select id="status" name="status" [disabled]="bloqueio" #status="ngModel" [(ngModel)]="manutencao.status" class="form-control">
+                  <option>{{manutencao.status}}</option>
+                  <option>Em acionamento</option>
+                  <option>Em trânsito</option>
+                  <option>Em andamento</option>
+                  <option>Suspensa</option>
+                  <option>Finalizada</option>
+                </select>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="datachegadanosite"><b>Chegada no site</b></label>
+              <input id="datachegadanosite" [disabled]="bloqueio" name="datachegadanosite" 
+                [(ngModel)]="manutencao.datachegadanosite"  type="text" bsDatepicker
+                class="form-control" [bsConfig]="datePickerConfig">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="datasaidadosite"><b>Saída no site</b></label>
+              <input id="datasaidadosite" [disabled]="bloqueio" name="datasaidadosite" 
+                [(ngModel)]="manutencao.datasaidadosite" type="text" bsDatepicker
+                 class="form-control" [bsConfig]="datePickerConfig">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="detalhes" class="control-label"><b>Detalhes:</b></label>
+              <input id="detalhes" [disabled]="bloqueio" name="detalhes" type="text" [(ngModel)]="manutencao.detalhes" class="form-control">
+            </div>
+          </div>
+        </div> 
+      </div>
+      <div class="card-footer text-muted  text-right">
+        <div class="row">
+          <div class="col-sm-6">
+            <span *ngIf="ctrl3">
+               <img class="imageClass" src="../assets/imagens/{{manutencao.idtecnico}}.png"/>
+            </span>
+          </div>
+          <div class="col-sm-6">
+            <button type="submit" class="btn btn-primary">
+              Alterar Manutenção
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+<br>
+<span *ngIf="!ctrl2">
+  <div class="alert alert-danger">
+    <strong>Atenção!</strong>O BA informado não existe.
+  </div>
+</span>
+<span *ngIf="controle">
+  <table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Status</th>
+      <th scope="col">Data</th>
+      <th scope="col">tecnico</th>
+      <th scope="col">Chegada no Site</th>
+      <th scope="col">Saída do Site</th>
+      <th scope="col">Detalhes</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let manutencao1 of manutencoes">
+      <tr>
+         <th scope="row">{{manutencao1.id}}</th>
+         <td>{{manutencao1.status}}</td>
+         <td>{{manutencao1.datahorastatus}}</td>
+         <td>{{manutencao1.tecnico}}</td>
+         <td>{{manutencao1.datachegadanosite}}</td>
+         <td>{{manutencao1.datasaidadosite}}</td>
+         <td>{{manutencao1.detalhes}}</td>
+      </tr>
+  </tbody>
+ </table>
+</span>

@@ -1,0 +1,152 @@
+<br>
+<form autocomplete="off" #frm="ngForm">
+    <div class="card" *ngIf="tecnico">
+        <div class="card-header">
+            <h5 class="card-title">
+                <span *ngIf="id === 0">Cadastro Técnico</span>
+                <span *ngIf="id != 0"><img class="imageClass" src="../assets/imagens/{{tecnico.id}}.png"/>...Alterar Técnico</span>
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group" [class.has-error]="nomecompletoctrl.invalid && 
+                        nomecompletoctrl.touched" [class.has-sucess]="nomecompletoctrl.valid">
+                      <label for="nomecompleto" class="control-label"><b>Nome Completo:</b></label>
+                      <input required id="nomecompleto" name="nomecompleto" type="text" [(ngModel)]="tecnico.nomecompleto" class="form-control" #nomecompletoctrl="ngModel">
+                      <span class="help=block" *ngIf="nomecompletoctrl.invalid && nomecompletoctrl.touched">
+                           Nome completo é um campo obrigatório. Por gentileza, preenche-lo...
+                      </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="label-default" for="nomecompleto"><b>Nome Usual:</b></label>
+                        <input type="text" required id="nomeusual" name="nomeusual" 
+                             [(ngModel)]="tecnico.nomeusual" class="form-control" #nomeusualctrl="ngModel">
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-sm-4">
+                      <div class="form-group">
+                            <label><b>Atuação</b></label>
+                            <div class="form-control">
+                              <label class="radio-inline form-check-label">
+                                  <input type="radio" id="atuacao" required #ativoctrl name="atuacao" value="Campo" [(ngModel)]="tecnico.atuacao">
+                                  Campo....
+                              </label>
+                              <label class="radio-inline form-check-label">
+                                  <input type="radio" id="atuacao" required #ativoctrl name="atuacao" value="Departamento" [(ngModel)]="tecnico.atuacao">
+                                  Departamento
+                              </label>
+                            </div>
+                            <span class="help-block" *ngIf="ativoctrl.touched && ativoctrl.invalid">
+                                Por gentileza, Informar o campo de atuação do técnico.
+                            </span>
+                      </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                        <label><b>Responsabilidade</b></label>
+                        <div class="form-control">
+                          <label class="radio-inline form-check-label">
+                              <input type="radio" id="responsabilidade" required #responsabilidadectrl name="responsabilidade" value="Preventiva" [(ngModel)]="tecnico.responsabilidade">
+                              Preventiva....
+                          </label>
+                          <label class="radio-inline form-check-label">
+                              <input type="radio" id="responsabilidade" required #responsabilidadectrl name="responsabilidade" value="Manutenção" [(ngModel)]="tecnico.responsabilidade">
+                              Manutenção
+                          </label>
+                        </div>
+                        <span class="help-block" *ngIf="responsabilidadectrl.touched && responsabilidadectrl.invalid">
+                            Por gentileza, Informar a responsabilidade do técnico.
+                        </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group" [class.has-error]="operadoractrl.touched && operadoractrl.invalid">
+                        <label for="operadora" class="control-label"><b>Operadora</b></label>
+                            <select id="operadora" #operadoractrl="ngModel" name="operadora"   
+                              [(ngModel)]="tecnico.operadora" class="form-control" required>
+                               <option>Selecione a operadora</option>
+                               <option>Claro</option>
+                               <option>OI</option>
+                               <option>TIM</option>
+                               <option>VIVO</option>
+                            </select>
+                            <span class="help-block" *ngIf="operadoractrl.touched && operadoractrl.invalid">
+                                Operadora é um campo obrigatório. Por gentileza, selecioná-lo...
+                            </span>
+                    </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                    <div class="col-sm-4">
+                            <div class="form-group" [class.has-error]="ufctrl.touched && ufctrl.invalid">
+                                <label for="uf" class="control-label"><b>UF</b></label>
+                                    <select id="uf" #ufctrl="ngModel" name="uf"   
+                                      [(ngModel)]="tecnico.uf" class="form-control" required>
+                                       <option>AC</option>
+                                       <option>DF</option>
+                                       <option>GO</option>
+                                       <option>MS</option>
+                                       <option>MT</option>
+                                       <option>TO</option>
+                                       <option>RO</option>
+                                    </select>
+                                    <span class="help-block" *ngIf="ufctrl.touched && ufctrl.invalid">
+                                        UF é um campo obrigatório. Por gentileza, selecioná-lo...
+                                    </span>
+                            </div>
+                          </div>
+                    <div class="col-sm-4">
+                            <div class="form-group" [class.has-error]="emailctrl.invalid && 
+                            emailctrl.touched" [class.has-sucess]="emailctrl.valid">
+                          <label for="email" class="control-label"><b>Email:</b></label>
+                          <input required id="email" name="email" type="text" email 
+                            [(ngModel)]="tecnico.email" class="form-control" #emailctrl="ngModel">
+                          <span class="help=block" *ngIf="emailctrl.invalid && emailctrl.touched">
+                                Campo email é obrigatório e esta invalido. Por gentileza, verificar....
+                           </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                            <div class="form-group" [class.has-error]="telefonectrl.invalid && 
+                            telefonectrl.touched" [class.has-sucess]="telefonectrl.valid">
+                          <label for="telefone" class="control-label"><b>Telefone:</b></label>
+                          <input required id="telefone" name="telefone" type="text" 
+                            [(ngModel)]="tecnico.telefone" class="form-control" #telefonectrl="ngModel">
+                          <span class="help=block" *ngIf="telefonectrl.invalid && telefonectrl.touched">
+                                Telefone é um campo obrigatório. Por gentileza, verificar....
+                           </span>
+                        </div>
+                    </div>
+                 </div>
+
+               <div class="row">
+                    <div class="col-sm-12">
+                       <div class="form-group">
+                        <label for="observacao"><b>Observação</b></label>
+                        <textarea class="form-control"  id="observacao" name="observacao" 
+                        [(ngModel)]="tecnico.observacao"></textarea>
+                      </div>
+                    </div>
+                </div>
+          </div>
+        <div class="card-footer text-muted  text-right">
+            <span *ngIf="id === 0">
+                <button type="button" [disabled]="frm.invalid" class="btn btn-primary btn-primary-spacing" (click)="cadastrar(frm)">Cadastrar</button>
+            </span>
+            <span *ngIf="id != 0">
+                <button type="button" [disabled]="frm.invalid" class="btn btn-primary btn-primary-spacing" (click)="alterar(frm)">Alterar</button>
+            </span>      
+        </div>
+        <p>{{mensagem}}</p>
+      </div>
+</form>
+<div>
+  <b><font size="3" color="red">{{erroMsg}}</font></b>
+</div>

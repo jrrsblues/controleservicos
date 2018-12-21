@@ -1,0 +1,139 @@
+<br>
+<form autocomplete="off" #frm="ngForm" (ngSubmit)="abriracionamento(frm)">
+    <div class="card bg-light mb-3">
+        <div class="card-header"><h4 align="center">Abrir Acionamento</h4></div>
+         <div class="card-body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="form-group" [class.has-error]="bactrl.invalid && 
+                        bactrl.touched" [class.has-sucess]="bactrl.valid">
+                      <label for="ba" class="control-label"><b>BA:</b></label>
+                      <input required id="ba" name="ba" type="text" [(ngModel)]="acionamento.ba" (change)="pesquisarmanutencaoporba(acionamento.ba)" class="form-control" #bactrl="ngModel">
+                      <span class="help=block" *ngIf="bactrl.invalid && bactrl.touched">
+                           BA é um campo obrigatório. Por gentileza, preenche-lo...
+                      </span>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group" [class.has-error]="uftecnicoctrl.touched && uftecnicoctrl.invalid">
+                        <label for="uftecnico" class="control-label"><b>UF:</b></label>
+                            <select [disabled]="bactrl.invalid" id="uftecnico" #uftecnicoctrl="ngModel" name="uftecnico" (click)="pesquisartecnico(acionamento.uftecnico)"   
+                              [(ngModel)]="acionamento.uftecnico" class="form-control" required>
+                               <option>AC</option>
+                               <option>DF</option>
+                               <option>GO</option>
+                               <option>MS</option>
+                               <option>MT</option>
+                               <option>RO</option>
+                               <option>TO</option>
+                            </select>
+                            <span class="help-block" *ngIf="uftecnicoctrl.touched && uftecnicoctrl.invalid">
+                                UF técnico é um campo obrigatório. Por gentileza, selecioná-lo...
+                            </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group" [class.has-error]="tecnicoctrl.touched && tecnicoctrl.invalid">
+                        <label for="tecnico" class="control-label"><b>Técnico:</b></label>
+                        <select [disabled]="uftecnicoctrl.invalid || bactrl.invalid" id="tecnico" #tecnicoctrl="ngModel" name="tecnico" 
+                        (change)="pesquisaridporufnomeusual(acionamento.uftecnico, acionamento.tecnico)" [(ngModel)]="acionamento.tecnico" class="form-control" required>
+                              <option *ngFor="let tecnico of tecnicos" [value]="tecnico.nomeusual">
+                                  {{tecnico.nomeusual}}
+                              </option>
+                        </select>
+                            <span class="help-block" *ngIf="tecnicoctrl.touched && tecnicoctrl.invalid">
+                                Técnico é um campo obrigatório. Por gentileza, selecioná-lo...
+                            </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group" [class.has-error]="tecnicostatusctrl.touched && tecnicostatusctrl.invalid">
+                        <label for="tecnicostatus" class="control-label"><b>Técnico Status:</b></label>
+                            <select [disabled]="tecnicoctrl.invalid || uftecnicoctrl.invalid || bactrl.invalid" 
+                            id="tecnicostatus" #tecnicostatusctrl="ngModel" name="tecnicostatus" 
+                            [(ngModel)]="acionamento.tecnicostatus" class="form-control" required>
+                               <option>Disponível</option>
+                               <option>Em atividade</option>
+                            </select>
+                            <span class="help-block" *ngIf="tecnicostatusctrl.touched && tecnicostatusctrl.invalid">
+                                Status do técnico é um campo obrigatório. Por gentileza, selecioná-lo...
+                            </span>
+                    </div>  
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col-sm-2">
+                            <div class="form-group" [class.has-error]="ufsitectrl.touched && ufsitectrl.invalid">
+                                <label for="uftecnico" class="control-label"><b>UF site:</b></label>
+                                    <select #ufsitectrl="ngModel" name="ufsite" (click)="pesquisarsiteporuf(acionamento.ufsite)"   
+                                      [(ngModel)]="acionamento.ufsite" class="form-control" required>
+                                       <option>AC</option>
+                                       <option>DF</option>
+                                       <option>GO</option>
+                                       <option>MS</option>
+                                       <option>MT</option>
+                                       <option>RO</option>
+                                       <option>TO</option>
+                                    </select>
+                                    <span class="help-block" *ngIf="ufsitectrl.touched && ufsitectrl.invalid">
+                                        UF site é um campo obrigatório. Por gentileza, selecioná-lo...
+                                    </span>
+                            </div>
+                    </div>
+                    <div class="col-sm-2">
+                            <div class="form-group" [class.has-error]="sitectrl.touched && sitectrl.invalid">
+                                <label for="site" class="control-label"><b>Site:</b></label>
+                                <select [disabled]="ufsitectrl.invalid" id="site" #sitectrl="ngModel" name="site" 
+                                [(ngModel)]="acionamento.site" class="form-control" required>
+                                      <option *ngFor="let site of sites" [value]="site.site">
+                                          {{site.site}}
+                                      </option>
+                                    </select>
+                                    <span class="help-block" *ngIf="sitectrl.touched && sitectrl.invalid">
+                                        Site é um campo obrigatório. Por gentileza, selecioná-lo...
+                                    </span>
+                            </div>
+                    </div>
+                    <div class="col-sm-4">
+                            <div class="form-group" [class.has-error]="tipomanutencaoctrl.touched && tipomanutencaoctrl.invalid">
+                                <label for="tipomanutencao" class="control-label"><b>Tipo manutenção:</b></label>
+                                    <select [disabled]="ufsitectrl.invalid || sitectrl.invalid" 
+                                    id="tipomanutencao" #tipomanutencaoctrl="ngModel" name="tipomanutencao" 
+                                    [(ngModel)]="acionamento.tipomanutencao" class="form-control" required>
+                                       <option>Preventiva</option>
+                                       <option>Corretiva</option>
+                                    </select>
+                                    <span class="help-block" *ngIf="tipomanutencaoctrl.touched && tipomanutencaoctrl.invalid">
+                                        Tipo de manutenção é um campo obrigatório. Por gentileza, selecioná-lo...
+                                    </span>
+                            </div>  
+                    </div>
+                    <div class="col-sm-4">
+                            <div class="form-group">
+                               <label for="dataacionamento"><b>Data de Acionamento</b></label>
+                                      <input id="dataacionamento" name="dataacionamento" [disabled]="ufsitectrl.invalid || sitectrl.invalid || tipomanutencaoctrl.invalid" 
+                                      [(ngModel)]="acionamento.dataacionamento" type="text" 
+                                      bsDatepicker [bsConfig]="datePickerConfig" class="form-control" required>
+                            </div>
+                    </div>
+            </div>
+            <span *ngIf="ctrltecnico">
+                <div class="row">
+                  <div class="col-sm-12">
+                     <img class="imageClass" src="../assets/imagens/{{tecnicosid[0].id}}.png"/>
+                  </div>
+                </div>
+            </span>
+        </div>
+        <div class="card-footer text-muted  text-right">
+            <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">
+                Abrir Acionamento
+            </button>
+        </div>
+      </div>
+      <span *ngIf="pesquisarbaexistente">
+        <div class="alert alert-danger">
+           <strong>Atenção!</strong> O BA informado já existe, Não pode ser cadastrado novamente!
+        </div>
+      </span>
+</form>

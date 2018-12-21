@@ -1,0 +1,25 @@
+.ponterCursor{
+    cursor: pointer;
+}
+
+.imageClass{
+    width:300px;
+    height:280px;
+}
+
+.imageClassLoader{
+    width:50px;
+    height:50px;
+}
+
+.btn-primary-spacing 
+{
+margin-right: 5px;
+margin-bottom: 1px !important;
+}
+
+.text-spacing
+{
+    margin-left: 5px;
+}
+

@@ -1,0 +1,25 @@
+<br>
+<div class="card text-center" *ngIf="tecnicosFiltro">
+    <div class="card-header">
+      <h5 class="card-title">{{tecnicosFiltro[id-1].id}} - {{tecnicosFiltro[id-1].nomecompleto}}</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xs-5">
+              <p><img class="imageClass" src="../assets/imagens/{{id}}.png"/></p>
+            </div>
+            <div class="col-xs-7">
+                    <p class="text-spacing" align="left"><b>UF: </b>{{tecnicosFiltro[id-1].uf}}</p>
+                    <p class="text-spacing" align="left"><b>Nome Usual: </b>{{tecnicosFiltro[id-1].nomeusual}}</p>
+                    <p class="text-spacing" align="left"><b>Atuação: </b>{{tecnicosFiltro[id-1].atuacao}}</p>
+                    <p class="text-spacing" align="left"><b>Responsabilidade: </b>{{tecnicosFiltro[id-1].responsabilidade}}</p>
+                    <p class="text-spacing" align="left"><b>Operadora: </b>{{tecnicosFiltro[id-1].operadora}}</p>
+                    <p class="text-spacing" align="left"><b>Data Contratação: </b>{{tecnicosFiltro[id-1].datainicio | date:'dd/MM/yyyy'}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <span *ngIf="id > 1"><button type="button" class="btn btn-primary btn-primary-spacing float-left" (click)="verDetalhesTecnicoAnterior()">Técnico Anterior</button></span>
+        <span *ngIf="id < qtd"><button type="button" class="btn btn-primary btn-primary-spacing float-right" (click)="verDetalhesTecnicoProximo()">Próximo Técnico</button></span>
+    </div>
+</div>

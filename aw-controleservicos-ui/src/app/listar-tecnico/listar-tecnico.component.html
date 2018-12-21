@@ -1,0 +1,25 @@
+<br>
+<div *ngIf="showLoadingIndicator" align="center"><img class="imageClassLoader" src="../assets/imagens/circulo.gif"/></div>
+<div class="form-group">
+   <input class="form-control" type="text" id="pesquisar" name="pesquisar" 
+   placeholder="Pesquisa rápida por nome..." [(ngModel)]="pesquisar"/>
+</div>
+<div  *ngFor="let tecnico of tecnicosFiltros">
+ <div class="card text-center">
+  <div class="card-header">
+    <h5 class="card-title">{{tecnico.id}} - {{tecnico.nomecompleto}}</h5>
+  </div>
+  <div class="card-body">
+    <p><img class="imageClass" src="../assets/imagens/{{tecnico.id}}.png"/></p>
+  </div>
+  <div class="card-footer text-muted">
+      <button type="button" class="btn btn-primary btn-primary-spacing" (click)="verDetalhesTecnico(tecnico.id)">Detalhe</button>
+      <button type="button" class="btn btn-warning btn-primary-spacing" (click)="alterarDadosTecnicos(tecnico.id)">Alterar</button>
+      <button type="button" class="btn btn-danger btn-primary-spacing">Apagar</button>
+  </div>
+ </div>
+ <br>
+</div>
+<div>
+  <b><font size="3" color="red">{{erroMsg}}</font></b>
+</div>
